@@ -174,4 +174,108 @@
     })
   });
 
+  /**
+   * Custom Cursor
+   */
+  const cursorDot = document.querySelector('[data-cursor-dot]');
+  const cursorOutline = document.querySelector('[data-cursor-outline]');
+  if(cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
+      window.addEventListener('mousemove', function (e) {
+          const posX = e.clientX;
+          const posY = e.clientY;
+
+          cursorDot.style.left = `${posX}px`;
+          cursorDot.style.top = `${posY}px`;
+
+          cursorOutline.animate({
+              left: `${posX}px`,
+              top: `${posY}px`
+          }, { duration: 500, fill: "forwards" });
+      });
+
+      document.querySelectorAll('a, button, .icon-box, input, textarea').forEach(link => {
+          link.addEventListener('mouseenter', () => {
+              cursorOutline.classList.add('hover');
+          });
+          link.addEventListener('mouseleave', () => {
+              cursorOutline.classList.remove('hover');
+          });
+      });
+  }
+
+  /**
+   * Vanilla Tilt Initialization
+   */
+  if (typeof VanillaTilt !== 'undefined') {
+      VanillaTilt.init(document.querySelectorAll(".projects .icon-box"), {
+          max: 10,
+          speed: 400,
+          glare: true,
+          "max-glare": 0.2
+      });
+  }
+
+  /**
+   * tsParticles Initialization
+   */
+  if (typeof tsParticles !== 'undefined') {
+      tsParticles.load("tsparticles", {
+          fpsLimit: 60,
+          interactivity: {
+              events: {
+                  onHover: {
+                      enable: true,
+                      mode: "repulse",
+                  },
+                  resize: true,
+              },
+              modes: {
+                  repulse: {
+                      distance: 100,
+                      duration: 0.4,
+                  },
+              },
+          },
+          particles: {
+              color: {
+                  value: ["#00f0ff", "#8b5cf6"],
+              },
+              links: {
+                  color: "#00f0ff",
+                  distance: 150,
+                  enable: true,
+                  opacity: 0.4,
+                  width: 1,
+              },
+              move: {
+                  direction: "none",
+                  enable: true,
+                  outModes: {
+                      default: "bounce",
+                  },
+                  random: false,
+                  speed: 2,
+                  straight: false,
+              },
+              number: {
+                  density: {
+                      enable: true,
+                      area: 800,
+                  },
+                  value: 60,
+              },
+              opacity: {
+                  value: 0.5,
+              },
+              shape: {
+                  type: "circle",
+              },
+              size: {
+                  value: { min: 1, max: 3 },
+              },
+          },
+          detectRetina: true,
+      });
+  }
+
 })()
